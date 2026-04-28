@@ -1,0 +1,173 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ──────────── CSS Variables ──────────── */
+:root {
+  --ink-paper: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.025'/%3E%3C/svg%3E");
+  --gold-line: linear-gradient(90deg, transparent, #c9a96e40, transparent);
+  --ink-vignette: radial-gradient(ellipse at center, transparent 40%, #06080d 100%);
+}
+
+/* ──────────── Base ──────────── */
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html {
+  color-scheme: dark;
+  scroll-behavior: smooth;
+}
+
+html,
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+body {
+  color: #dedad2;
+  background-color: #06080d;
+  font-family: "Sora", system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  letter-spacing: 0.01em;
+}
+
+/* Ink paper texture overlay */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image: var(--ink-paper);
+  background-repeat: repeat;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.6;
+  mix-blend-mode: overlay;
+}
+
+/* Vignette effect */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: var(--ink-vignette);
+  pointer-events: none;
+  z-index: 9998;
+  opacity: 0.4;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+::selection {
+  background-color: #c9a96e50;
+  color: #f0ede8;
+}
+
+/* ──────────── Scrollbar ──────────── */
+::-webkit-scrollbar {
+  width: 5px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #2a261f;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #3d3832;
+}
+
+/* ──────────── Stagger delays ──────────── */
+.stagger-1 { animation-delay: 0.06s; }
+.stagger-2 { animation-delay: 0.12s; }
+.stagger-3 { animation-delay: 0.18s; }
+.stagger-4 { animation-delay: 0.24s; }
+.stagger-5 { animation-delay: 0.30s; }
+.stagger-6 { animation-delay: 0.36s; }
+.stagger-7 { animation-delay: 0.42s; }
+.stagger-8 { animation-delay: 0.48s; }
+.stagger-9 { animation-delay: 0.54s; }
+.stagger-10 { animation-delay: 0.60s; }
+
+/* ──────────── Gold rule lines ──────────── */
+.rule-gold {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #c9a96e40, #c9a96e60, #c9a96e40, transparent);
+}
+
+.rule-gold-left {
+  height: 1px;
+  background: linear-gradient(90deg, #c9a96e50, transparent);
+}
+
+/* ──────────── Glow effects ──────────── */
+.glow-cn {
+  box-shadow: 0 0 0 1px #d94f3b12, 0 4px 32px -8px #d94f3b15;
+}
+.glow-en {
+  box-shadow: 0 0 0 1px #3ba3a012, 0 4px 32px -8px #3ba3a015;
+}
+.glow-gold {
+  box-shadow: 0 0 0 1px #c9a96e12, 0 4px 32px -8px #c9a96e10;
+}
+
+/* ──────────── Dot grid pattern ──────────── */
+.dot-grid {
+  background-image: radial-gradient(circle at 1px 1px, #c9a96e08 1px, transparent 0);
+  background-size: 20px 20px;
+}
+
+/* ──────────── Brush stroke decorative class ──────────── */
+.brush-underline {
+  background-image: linear-gradient(120deg, #c9a96e30 0%, #c9a96e15 100%);
+  background-repeat: no-repeat;
+  background-size: 100% 6px;
+  background-position: 0 88%;
+}
+
+/* ──────────── Focus ──────────── */
+:focus-visible {
+  outline: 1px solid #c9a96e;
+  outline-offset: 2px;
+}
+
+/* ──────────── Card hover lift ──────────── */
+.card-lift {
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+              box-shadow 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.card-lift:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 40px -12px rgba(0, 0, 0, 0.6),
+              0 0 0 1px #c9a96e15;
+}
+
+/* ──────────── Horizontal scroll fade ──────────── */
+.fade-edges {
+  mask-image: linear-gradient(90deg, transparent, black 8%, black 92%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, black 8%, black 92%, transparent);
+}
+
+/* ──────────── Chinese character watermark ──────────── */
+.watermark::before {
+  content: "墨";
+  position: absolute;
+  right: -20px;
+  top: -40px;
+  font-family: "Cormorant Garamond", serif;
+  font-size: 240px;
+  font-weight: 700;
+  color: #c9a96e;
+  opacity: 0.015;
+  pointer-events: none;
+  line-height: 1;
+  z-index: 0;
+}

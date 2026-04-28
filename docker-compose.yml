@@ -1,0 +1,28 @@
+services:
+  frontend:
+    build:
+      context: .
+      args:
+        # Build-time: NEXT_PUBLIC_ vars must be set at build time
+        NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL:-https://chinadispatch.example.com}
+        # API_BASE_URL at build time is only needed if pages are pre-rendered
+        API_BASE_URL: ${API_BASE_URL:-http://backend:8000}
+    environment:
+      # Runtime: server components read this when handling requests
+      - API_BASE_URL=${API_BASE_URL:-http://backend:8000}
+      - NEXT_PUBLIC_SITE_URL=${NEXT_PUBLIC_SITE_URL:-https://chinadispatch.example.com}
+    ports:
+      - "3000:3000"
+    depends_on:
+      backend:
+        condition: service_started
+    restart: unless-stopped
+
+  backend:
+    # 👇 替换为你的后端镜像或 build context
+    image: your-backend-image:latest
+    # build:
+    #   context: ../backend
+    ports:
+      - "8000:8000"
+    restart: unless-stopped
